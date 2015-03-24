@@ -1,8 +1,8 @@
-class OHResources
+class EHResources
   attr_accessor :conn, :options
   @@subject = '/resources' # this will prepend to all locations
 
-  def initialize(conn=OHConnection.connect, options={})
+  def initialize(conn=EHConnection.connect, options={})
     @conn = conn
     @options = options
   end

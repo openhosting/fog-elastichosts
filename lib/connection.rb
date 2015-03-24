@@ -1,10 +1,10 @@
 ENDPOINT="https://api-east1.openhosting.com"
 
-if e=ENV['OHAUTH']
+if e=ENV['ESAUTH']
   USERNAME,PASSWORD=e.split(/:/)
 end
 
-class OHConnection
+class ESConnection
   include Faraday
   # remember, this is a method, not a symbol and takes a symbol to a method as arguments!
   attr_accessor :connect

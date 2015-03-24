@@ -6,14 +6,14 @@ Dir[File.dirname(__FILE__) + '/*.rb'].each do |file|
   require file
 end
 
-module Openhosting
+module ElasticStack
   VERSION = "0.0.3"
 
   class << self
     attr_accessor :connection, :debian, :foo
 
     def initialize
-      @connection = OHConnection.connect
+      @connection = ESConnection.connect
       @lock = Mutex.new
     end
 
@@ -38,15 +38,15 @@ module Openhosting
     end
 
     def debian_server(conn=@connection, drive)
-      s = OHServers.new(conn)
+      s = ESServers.new(conn)
       pw = (0...8).map { (65 + rand(26)).chr }.join
-      server = OHServer.new("Debian",500,256,{"nic:0:dhcp" => "auto", "vnc" => "auto", "password" => pw, "ide:0:0" => drive, "boot" => "ide:0:0" })
+      server = ESServer.new("Debian",500,256,{"nic:0:dhcp" => "auto", "vnc" => "auto", "password" => pw, "ide:0:0" => drive, "boot" => "ide:0:0" })
       sid = s.create(server)
     end
 
     def debian_drive(conn=@connection)
-      d = OHDrives.new(conn)
-      drive = OHDrive.new("Debian", "2G")
+      d = ESDrives.new(conn)
+      drive = ESDrive.new("Debian", "2G")
       did = d.create(drive)
       d.image(did['drive'], DEBIAN[:wheezy])
       return did['drive']

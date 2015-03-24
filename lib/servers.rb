@@ -1,8 +1,8 @@
-class OHServers
+class ESServers
   attr_accessor :conn, :options
   @@subject = '/servers' # this will prepend to all locations
 
-  def initialize(conn=OHConnection.connect, options={})
+  def initialize(conn=ESConnection.connect, options={})
     @conn = conn
     @options = options
   end
@@ -31,7 +31,7 @@ class OHServers
   end
 
   def create(server, start=true)
-    if ( server.is_a? OHServer )
+    if ( server.is_a? ESServer )
       body = server.to_json
       if ( start )
         resp = @conn.post "#{@@subject}/#{__method__}", body
@@ -39,12 +39,12 @@ class OHServers
         # rescue JSON::ParserError resp.body
       else
         resp = @conn.post "#{@@subject}/#{__method__}/stopped", body
-        #would be cool if this returned an OHServer object to use later
+        #would be cool if this returned an ESServer object to use later
         return JSON.parse(resp.body)
         #rescue JSON::ParserError resp.body
       end
     else
-      raise TypeError, "First argument must be an instance of OHServer with a unique name"
+      raise TypeError, "First argument must be an instance of ESServer with a unique name"
     end
 
   end
@@ -124,7 +124,7 @@ class OHServers
   end
 end
 
-class OHServer
+class ESServer
 
 =begin
 The /servers/<uuid>/info location returns a hash which looks like this as of API v?? on Fri Feb  6 01:40:45 UTC 2015

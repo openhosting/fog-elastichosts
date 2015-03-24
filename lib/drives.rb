@@ -1,8 +1,8 @@
-class OHDrives
+class ESDrives
   attr_accessor :conn, :options
   @@subject = '/drives' # this will prepend to all locations
 
-  def initialize(conn=OHConnection.connect, options={})
+  def initialize(conn=ESConnection.connect, options={})
     @conn = conn
     @options = options
   end
@@ -10,7 +10,7 @@ class OHDrives
   def list
     # the __method__ instance var is the name of the method
     resp = @conn.get "#{@@subject}/#{__method__}"
-    # returns an array of Hashes, convert to an array of OHDriveUUID objects
+    # returns an array of Hashes, convert to an array of ESDriveUUID objects
     return JSON.parse(resp.body)
   end
 
@@ -32,7 +32,7 @@ class OHDrives
   end
 
   def create(drive,options={})
-    if ( drive.is_a? OHDrive )
+    if ( drive.is_a? ESDrive )
       # a data structure of optional user metadata and tags
       ctags = options[:ctags]
       user_data = options[:user]
@@ -42,7 +42,7 @@ class OHDrives
       resp = @conn.post "#{@@subject}/#{__method__}", body
       return JSON.parse(resp.body)
     else
-      raise TypeError, "First argument must be an instance of OHDrive with a unique name"
+      raise TypeError, "First argument must be an instance of ESDrive with a unique name"
     end
   end
 
@@ -112,7 +112,7 @@ class OHDrives
   end 
 
   def write(drive, offset=0)
-    if ( drive.is_a? OHDrive )
+    if ( drive.is_a? ESDrive )
       content_type = "application/octet-stream"
       content_encoding = "gzip"
       loc = @@subject
@@ -130,7 +130,7 @@ class OHDrives
   end
 end
 
-class OHDrive
+class ESDrive
 
 =begin
 The /drives/<uuid>/info location returns a hash which looks like this as of API v?? on Fri Feb  6 01:40:45 UTC 2015
