@@ -2,9 +2,6 @@ require 'faraday'
 require 'patron'
 require 'json'
 require 'thread'
-Dir[File.dirname(__FILE__) + '/*.rb'].each do |file|
-  require file
-end
 
 module Fog
   module ElasticStack
@@ -55,3 +52,5 @@ module Fog
     end
   end
 end
+
+require 'fog/elasticstack/core'
