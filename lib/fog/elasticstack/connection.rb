@@ -1,10 +1,11 @@
-ENDPOINT="https://api-east1.openhosting.com"
+require './fog/elasticstack/constants'
 
 if e=ENV['ESAUTH']
   USERNAME,PASSWORD=e.split(/:/)
 end
 
 class ESConnection
+  ENDPOINT="https://api-east1.openhosting.com"
   include Faraday
   # remember, this is a method, not a symbol and takes a symbol to a method as arguments!
   attr_accessor :connect

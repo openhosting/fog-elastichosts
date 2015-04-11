@@ -1,5 +1,6 @@
 require 'fog/core'
 require 'fog/json'
+require './fog/elasticstack/connection'
 
 module Fog
   module ElasticStack
@@ -9,6 +10,5 @@ module Fog
     service(:drives, 'Drives')
     service(:network, 'Network')
 
-    end
   end
 end
